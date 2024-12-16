@@ -8,7 +8,7 @@
     <meta name="author" content="Mouad Hallaffou">
     <meta name="project-name" content="FUT Champions Admin Dashboard">
     <!-- CSS Links -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <title>Fut Champions</title>
 </head>
@@ -16,7 +16,7 @@
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="/assets/images/logo.webp" alt="">
+                <img src="assets/images/logo.svg" alt="">
             </div>
             <span class="logo_name">FUT Ultimite</span>
         </div>
