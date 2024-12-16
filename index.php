@@ -1,3 +1,6 @@
+<?php 
+    include("./database/connection.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +19,7 @@
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="assets/images/logo.svg" alt="">
+                <img src="assets/images/logo.svg" alt=""> 
             </div>
             <span class="logo_name">FUT Ultimite</span>
         </div>
@@ -27,7 +30,7 @@
                     <i class="fas fa-tachometer-alt"></i>
                     <span class="link-name">Dashboard</span>
                 </a></li>
-                <li><a href="#">
+                <li><a href="./views/form.php">
                     <i class="fas fa-users"></i>
                     <span class="link-name">Players</span>
                 </a></li>
@@ -38,6 +41,10 @@
                 <li><a href="#">
                     <i class="fas fa-building"></i>
                     <span class="link-name">Club</span>
+                </a></li>
+                <li><a href="./views/client.php">
+                    <i class="fas fa-building"></i>
+                    <span class="link-name">Terrain</span>
                 </a></li>
                 <li><a href="#">
                     <i class="fas fa-dumbbell"></i>
