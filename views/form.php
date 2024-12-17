@@ -20,55 +20,40 @@
         
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="formation">Formation:</label>
-                        <select id="formation" name="formation" class="form-control">
-                            <option value="4-3-3" selected>4-3-3</option>
-                            <option value="4-4-2">4-4-2</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Nom du joueur:</label>
+                    <label for="name">Nom du joueur:</label>
                         <input type="text" id="namePlayer" name="name" value="" class="form-control" placeholder="Entrez le nom du joueur">
                         <span class="erreur-message">*uniquement des caracteres</span>
+                    </div>
+                    <div class="form-group">
+                    <label for="photo">Photo du joueur:</label>
+                        <input type="url" id="photoPlayer" name="photo" class="form-control" placeholder="URL de la photo du joueur">
+                        <span class="erreur-message">*L'URL doit commencer par "https://"</span>
                     </div>
                 </div>
         
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="photo">Photo du joueur:</label>
-                        <input type="url" id="photoPlayer" name="photo" class="form-control" placeholder="URL de la photo du joueur">
-                        <span class="erreur-message">*L'URL doit commencer par "https://"</span>
-                    </div>
                     <div class="form-group">
                         <label for="nationality">Nationalité:</label>
                         <input type="text" id="nationalityPlayer" name="nationality" class="form-control" placeholder="Entrez la nationalité">
                         <span class="erreur-message">*uniquement des caracteres</span>
-                    </div>   
-                </div>
-        
-                <div class="form-row">
+                    </div>
                     <div class="form-group">
                         <label for="drapeau">Drapeau:</label>
                         <input type="url" id="drapeauPlayer" name="drapeau" class="form-control" placeholder="URL du drapeau">
                         <span class="erreur-message">*L'URL doit commencer par "https://"</span>
-                    </div>
-                    <div class="form-group">
+                    </div>   
+                </div>
+        
+                <div class="form-row">
+                <div class="form-group">
                         <label for="club">Club:</label>
                         <input type="text" id="clubPlayer" name="club" class="form-control" placeholder="Entrez le nom du club">
                         <span class="erreur-message">*uniquement des caracteres</span>
                     </div>
-                </div>
-        
-                <div class="form-row">
                     <div class="form-group">
                         <label for="logo">logo du club:</label>
                         <input type="url" id="logoPlayer" name="logo" class="form-control" placeholder="URL du logo du club">
-                        <span class="erreur-message">*L'URL doit commencer par "https://"</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="rating">Note globale:</label>
-                        <input type="number" id="ratingPlayers" name="rating" class="form-control" placeholder="Entrez la Note globale">
-                        <span class="erreur-message">*comprise entre 10 et 99</span>
+                        <span class="erreur-message">*L'URL doit commencer par "https://"</span>                        
                     </div>
                 </div>
 
@@ -89,6 +74,11 @@
                             <option value="RW">RW</option>
                             <option value="ST">ST</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Note globale:</label>
+                        <input type="number" id="ratingPlayers" name="rating" class="form-control" placeholder="Entrez la Note globale">
+                        <span class="erreur-message">*comprise entre 10 et 99</span>
                     </div>
                 </div>
         
@@ -170,8 +160,8 @@
                </div>
             </form>
         </div>   
-     </div> 
-     <script src="/FUT-Champions-Content-Manager/assets/js/main.js"></script>
-    </body>
+    </div> 
+<script src="/FUT-Champions-Content-Manager/assets/js/main.js"></script>
+</body>
 </html>
 

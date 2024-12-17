@@ -378,37 +378,6 @@ nav.close ~ .dashboard .top {
     background-color: var(--box3-color);
 }
 
-.dash-content .activity .activity-data {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.activity .activity-data {
-    display: flex;
-}
-
-.activity-data .data {
-    display: flex;
-    flex-direction: column;
-    margin: 0 15px;
-}
-
-.activity-data .data-title {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text-color);
-}
-
-.activity-data .data .data-list {
-    font-size: 18px;
-    font-weight: 400;
-    margin-top: 20px;
-    white-space: nowrap;
-    color: var(--text-color);
-}
-
 /* Media Queries */
 @media (max-width: 1000px) {
     nav {
