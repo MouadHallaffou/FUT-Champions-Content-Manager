@@ -1,5 +1,5 @@
 <?php
-include("./database/connection.php");
+include("../database/connection.php");
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ include("./database/connection.php");
     <meta name="author" content="Mouad Hallaffou">
     <meta name="project-name" content="FUT Champions Admin Dashboard">
     <!-- CSS Links -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <title>Fut Champions</title>
@@ -21,18 +21,18 @@ include("./database/connection.php");
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="assets/images/logo.svg" alt="">
+                <img src="../assets/images/logo.svg" alt="">
             </div>
             <span class="logo_name">FUT Ultimite</span>
         </div>
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="index.php">
+                <li><a href="../index.php">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="link-name">Dashboard</span>
                     </a></li>
-                <li><a href="/FUT-Champions-Content-Manager/views/players.php">
+                <li><a href="players.php">
                         <i class="fas fa-users"></i>
                         <span class="link-name">Players</span>
                     </a></li>
@@ -44,7 +44,7 @@ include("./database/connection.php");
                         <i class="fas fa-building"></i>
                         <span class="link-name">Club</span>
                     </a></li>
-                <li><a href="#">
+                <li><a href="/FUT-Champions-Content-Manager/terrain/club.php">
                         <i class="fas fa-building"></i>
                         <span class="link-name">Terrain</span>
                     </a></li>
@@ -135,6 +135,12 @@ include("./database/connection.php");
                                     <input type="text" id="simple-search" placeholder="Search for products" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 </div>
                             </form>
+                        </div>
+                        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                            <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                <i class="fas fa-plus-circle h-3.5 w-3.5 mr-1.5 -ml-1"></i>
+                                Add Player
+                            </button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">

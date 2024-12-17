@@ -8,7 +8,7 @@ CREATE TABLE Clubs (
     logo VARCHAR(255)
 );
 
-CREATE TABLE Nationalitys (
+CREATE TABLE Nationalities (
     nationality_id INT AUTO_INCREMENT PRIMARY KEY,
     nationality_name VARCHAR(255) NOT NULL UNIQUE,
     flag VARCHAR(255)
@@ -56,8 +56,8 @@ CREATE TABLE Players (
     nationality_id INT,
     statistjr_id INT,
     statistgk_id INT,
-    FOREIGN KEY (club_id) REFERENCES Club(club_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (nationality_id) REFERENCES Nationality(nationality_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (statistjr_id) REFERENCES StatistiqueJr(statistjr_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (statistgk_id) REFERENCES StatistiqueGK(statistgk_id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (club_id) REFERENCES Clubs(club_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (nationality_id) REFERENCES Nationalities(nationality_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (statistjr_id) REFERENCES StatistiqueJrs(statistjr_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (statistgk_id) REFERENCES StatistiqueGKs(statistgk_id) ON DELETE SET NULL ON UPDATE CASCADE
 );

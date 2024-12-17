@@ -1,5 +1,5 @@
 <?php
-include("./database/connection.php");
+include("../database/connection.php");
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ include("./database/connection.php");
     <meta name="author" content="Mouad Hallaffou">
     <meta name="project-name" content="FUT Champions Admin Dashboard">
     <!-- CSS Links -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <title>Fut Champions</title>
@@ -21,18 +21,18 @@ include("./database/connection.php");
     <nav>
         <div class="logo-name">
             <div class="logo-image">
-                <img src="assets/images/logo.svg" alt="">
+                <img src="../assets/images/logo.svg" alt="">
             </div>
             <span class="logo_name">FUT Ultimite</span>
         </div>
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="index.php">
+                <li><a href="../index.php">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="link-name">Dashboard</span>
                     </a></li>
-                <li><a href="/FUT-Champions-Content-Manager/views/players.php">
+                <li><a href="players.php">
                         <i class="fas fa-users"></i>
                         <span class="link-name">Players</span>
                     </a></li>
@@ -136,6 +136,12 @@ include("./database/connection.php");
                                 </div>
                             </form>
                         </div>
+                        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                            <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                <i class="fas fa-plus-circle h-3.5 w-3.5 mr-1.5 -ml-1"></i>
+                                Add Player
+                            </button>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -147,20 +153,10 @@ include("./database/connection.php");
                                             <label for="checkbox-all" class="sr-only">checkbox</label>
                                         </div>
                                     </th>
-                                    <th scope="col" class="p-4">Nom</th>
-                                    <th scope="col" class="p-4">Nationalité</th>
-                                    <th scope="col" class="p-4">Drapeau</th>
+                                    <th scope="col" class="p-4">id</th>
                                     <th scope="col" class="p-4">Club</th>
                                     <th scope="col" class="p-4">Logo</th>
-                                    <th scope="col" class="p-4">Position</th>
-                                    <th scope="col" class="p-4">Note</th>
-                                    <th scope="col" class="p-4">Vitesse</th>
-                                    <th scope="col" class="p-4">Tir</th>
-                                    <th scope="col" class="p-4">Passes</th>
-                                    <th scope="col" class="p-4">Dribbles</th>
-                                    <th scope="col" class="p-4">Défense</th>
-                                    <th scope="col" class="p-4">Physique</th>
-                                    <th scope="col" class="p-4">Option</th>
+                                    <th scope="col" class="p-4">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,30 +167,11 @@ include("./database/connection.php");
                                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                         </div>
                                     </td>
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div class="flex items-center mr-3">
-                                            <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Player Image" class="h-8 w-auto mr-3">
-                                            Cristiano Ronaldo
-                                        </div>
-                                    </th>
-                                    <td class="px-4 py-3">
-                                        <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">Portugal</span>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Flag" class="h-4 w-4">
-                                    </td>
-                                    <td class="px-4 py-3">Al-Nassr</td>
+                                    <td class="px-4 py-3">1</td>
+                                    <td class="px-4 py-3">real madrid</td>
                                     <td class="px-4 py-3">
                                         <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Club Logo" class="h-4 w-4">
                                     </td>
-                                    <td class="px-4 py-3">ST</td>
-                                    <td class="px-4 py-3">95</td>
-                                    <td class="px-4 py-3">90</td>
-                                    <td class="px-4 py-3">89</td>
-                                    <td class="px-4 py-3">85</td>
-                                    <td class="px-4 py-3">88</td>
-                                    <td class="px-4 py-3">60</td>
-                                    <td class="px-4 py-3">75</td>
                                     <td class="px-4 py-3">
                                         <div class="flex items-center space-x-4">
                                             <button type="button" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
