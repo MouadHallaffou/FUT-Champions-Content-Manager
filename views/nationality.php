@@ -1,6 +1,29 @@
 <?php
 require("../database/connection.php");
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nationality_name = isset($_POST['nationality_name']) ? $_POST['nationality_name'] : '';
+    $flag_url = isset($_POST['flag_url']) ? $_POST['flag_url'] : '';
+
+    if (!empty($nationality_name) && !empty($flag_url)) {
+        $stmt = $connection->prepare("INSERT INTO Nationalities (nationality_name, flag) VALUES (?, ?)");
+        if (!$stmt) {
+            die("Prepare failed: " . $connection->error);
+        }
+
+        $stmt->bind_param("ss", $nationality_name, $flag_url);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Nationalité ajoutée avec succès !');</script>";
+        } else {
+            echo "<script>alert('Erreur lors de l\'ajout de la nationalité : " . $stmt->error . "');</script>";
+        }
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('Veuillez remplir tous les champs.');</script>";
+    }
+}
 
 ?>
 
@@ -139,7 +162,30 @@ require("../database/connection.php");
                             </thead>
                             <tbody>
                                
-                            
+                            <?php
+                                $result = $connection->query("SELECT * FROM Nationalities");
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr class='border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'>
+                                            <td class='px-4 py-3'>{$row['nationality_id']}</td>
+                                            <td class='px-4 py-3'>{$row['nationality_name']}</td>
+                                            <td class='px-4 py-3'>
+                                                <img src='{$row['flag']}' alt='Drapeau' class='h-8 w-8'>
+                                            </td>
+                                            <td class='px-4 py-3'>
+                                                <div class='flex items-center space-x-4'>
+                                                    <button type='button' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                                                        <i class='fas fa-edit mr-2'></i>
+                                                        Edit
+                                                    </button>
+                                                    <button type='button' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
+                                                        <i class='fas fa-trash mr-2'></i>
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                }
+                                ?>
 
 
                             </tbody>
