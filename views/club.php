@@ -211,11 +211,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Formulaire -->
         <form id="clubForm" class="hidden max-w-sm mx-auto mt-5" method="POST">
             <div class="mb-5">
-                <label for="club_name" class="block text-sm font-medium text-gray-900">Nationalité</label>
+                <label for="club_name" class="block text-sm font-medium text-gray-900">Club:</label>
                 <input type="text" name="club_name" id="club_name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
             </div>
             <div class="mb-5">
-                <label for="logo_url" class="block text-sm font-medium text-gray-900">URL du drapeau</label>
+                <label for="logo_url" class="block text-sm font-medium text-gray-900">URL du Logo</label>
                 <input type="url" name="logo_url" id="logo_url" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
             </div>
             <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
