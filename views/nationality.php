@@ -2,30 +2,28 @@
 require("../database/connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des données depuis le formulaire
+
     $nationality_name = isset($_POST['nationality_name']) ? $_POST['nationality_name'] : '';
     $flag_url = isset($_POST['flag_url']) ? $_POST['flag_url'] : '';
-
     if (!empty($nationality_name) && !empty($flag_url)) {
-        // Requête SQL avec les colonnes correctes
+
         $stmt = $connection->prepare("INSERT INTO Nationalities (nationality_name, flag) VALUES (?, ?)");
         if (!$stmt) {
             die("Prepare failed: " . $connection->error);
         }
 
-        // Liaison des paramètres
         $stmt->bind_param("ss", $nationality_name, $flag_url);
-
-       
-
+        if ($stmt->execute()) {
+            echo "<script>alert('nationality ajouté avec succès !');</script>";
+        } else {
+            echo "<script>alert('Erreur lors de l\'ajout du natinalite : " . addslashes($stmt->error) . "');</script>";
+        }
         $stmt->close();
     } else {
         echo "<script>alert('Veuillez remplir tous les champs.');</script>";
     }
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </h5>
                         </div>
                         <div class="flex-shrink-0 flex flex-col items-start md:flex-row md:items-center lg:justify-end space-y-3 md:space-y-0 md:space-x-3">
-                            <button type="button" id="createProductButton" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                            <button type="button" id="createNationality" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                                 <i class="fas fa-plus-circle h-3.5 w-3.5 mr-1.5 -ml-1"></i>
                                 Add nationality
                             </button>
@@ -172,14 +170,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </td>
                                             <td class='px-4 py-3'>
                                                 <div class='flex items-center space-x-4'>
-                                                    <button type='button' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                                                    <a href='lien-vers-page-modifier' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
                                                         <i class='fas fa-edit mr-2'></i>
                                                         Edit
-                                                    </button>
-                                                    <button type='button' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
+                                                    </a>
+                                                    <a href='deleteNationality.php' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
                                                         <i class='fas fa-trash mr-2'></i>
                                                         Delete
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>";
@@ -209,5 +207,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
 <script src="../assets/js/script.js"></script>
+<?php
+    $connection->close();
+?>
 </body>
 </html>

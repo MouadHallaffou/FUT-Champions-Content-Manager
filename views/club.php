@@ -1,5 +1,32 @@
 <?php
 include("../database/connection.php");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $club_name = isset($_POST['club_name']) ? trim($_POST['club_name']) : '';
+    $logo_url = isset($_POST['logo_url']) ? trim($_POST['logo_url']) : '';
+
+    if (!empty($club_name) && !empty($logo_url)) {
+
+        $stmt = $connection->prepare("INSERT INTO Clubs (club_name, logo) VALUES (?, ?)");
+        
+        if (!$stmt) {
+            die("Erreur de préparation de la requête : " . $connection->error);
+        }
+
+        $stmt->bind_param('ss', $club_name, $logo_url);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Club ajouté avec succès !');</script>";
+        } else {
+            echo "<script>alert('Erreur lors de l\'ajout du club : " . addslashes($stmt->error) . "');</script>";
+        }
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('Veuillez remplir tous les champs.');</script>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,48 +56,44 @@ include("../database/connection.php");
         <div class="menu-items">
             <ul class="nav-links">
                 <li><a href="../index.php">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="link-name">Dashboard</span>
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="link-name">Dashboard</span>
                     </a></li>
                 <li><a href="players.php">
-                        <i class="fas fa-users"></i>
-                        <span class="link-name">Players</span>
+                    <i class="fas fa-users"></i>
+                    <span class="link-name">Players</span>
                     </a></li>
                 <li><a href="/FUT-Champions-Content-Manager/views/nationality.php">
-                        <i class="fas fa-flag"></i>
-                        <span class="link-name">Nationality</span>
+                    <i class="fas fa-flag"></i>
+                    <span class="link-name">Nationality</span>
                     </a></li>
                 <li><a href="/FUT-Champions-Content-Manager/views/club.php">
-                        <i class="fas fa-building"></i>
-                        <span class="link-name">Club</span>
+                    <i class="fas fa-building"></i>
+                    <span class="link-name">Club</span>
                     </a></li>
                 <li><a href="#">
-                        <i class="fas fa-building"></i>
-                        <span class="link-name">Terrain</span>
+                    <i class="fas fa-building"></i>
+                    <span class="link-name">Terrain</span>
                     </a></li>
                 <li><a href="#">
-                        <i class="fas fa-dumbbell"></i>
-                        <span class="link-name">Statist JR</span>
+                    <i class="fas fa-dumbbell"></i>
+                    <span class="link-name">Statist JR</span>
                     </a></li>
-
                 <li><a href="#">
-                        <i class="fas fa-fist-raised"></i>
-                        <span class="link-name">Statist GK</span>
+                    <i class="fas fa-fist-raised"></i>
+                    <span class="link-name">Statist GK</span>
                     </a></li>
             </ul>
-
             <ul class="logout-mode">
                 <li><a href="#">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span class="link-name">Logout</span>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="link-name">Logout</span>
                     </a></li>
-
                 <li class="mode">
                     <a href="#">
                         <i class="fas fa-moon"></i>
                         <span class="link-name">Dark Mode</span>
                     </a>
-
                     <div class="mode-toggle">
                         <span class="switch"></span>
                     </div>
@@ -106,7 +129,6 @@ include("../database/connection.php");
             </div>
         </div>
 
-        <!-- Start block -->
         <section class="bg-gray-50 py-1 bg-gray-300 sm:rounded-lg antialiased">
             <div class="mx-auto max-w-screen-auto">
                 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -132,14 +154,14 @@ include("../database/connection.php");
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                         <i class="fas fa-search w-5 h-5 text-gray-500 dark:text-gray-400"></i>
                                     </div>
-                                    <input type="text" id="simple-search" placeholder="Search for products" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <input type="text" id="simple-search" placeholder="Search for club" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 </div>
                             </form>
                         </div>
                         <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                            <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                            <button type="button" id="createClubs" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                                 <i class="fas fa-plus-circle h-3.5 w-3.5 mr-1.5 -ml-1"></i>
-                                Add Player
+                                Add Club
                             </button>
                         </div>
                     </div>
@@ -147,12 +169,6 @@ include("../database/connection.php");
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-all" class="sr-only">checkbox</label>
-                                        </div>
-                                    </th>
                                     <th scope="col" class="p-4">id</th>
                                     <th scope="col" class="p-4">Club</th>
                                     <th scope="col" class="p-4">Logo</th>
@@ -160,31 +176,32 @@ include("../database/connection.php");
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td class="p-4 w-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3">1</td>
-                                    <td class="px-4 py-3">real madrid</td>
-                                    <td class="px-4 py-3">
-                                        <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Club Logo" class="h-4 w-4">
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex items-center space-x-4">
-                                            <button type="button" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                                <i class="fas fa-edit mr-2"></i>
-                                                Edit
-                                            </button>
-                                            <button type="button" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
-                                                <i class="fas fa-trash mr-2"></i>
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <?php
+                            $result = $connection->query("SELECT * FROM Clubs");
+                            if ($result) {
+                                while ($line = $result->fetch_assoc()) {
+                                    echo "<tr class='border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'>
+                                            <td class='px-4 py-3'>{$line['club_id']}</td>
+                                            <td class='px-4 py-3'>{$line['club_name']}</td>
+                                            <td class='px-4 py-3'>
+                                                <img src='{$line['logo']}' alt='logo' class='h-8 w-8'>
+                                            </td>
+                                            <td class='px-4 py-3'>
+                                                <div class='flex items-center space-x-4'>
+                                                    <a href='lien-vers-page-modifier' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                                                        <i class='fas fa-edit mr-2'></i>
+                                                        Edit
+                                                    </a>
+                                                    <a href='lien-vers-page-supprimer' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
+                                                        <i class='fas fa-trash mr-2'></i>
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>";
+                                 }
+                            }
+                            ?>
                             </tbody>
                         </table>
                     </div>
@@ -192,8 +209,33 @@ include("../database/connection.php");
             </div>
         </section>
     <!-- End block -->
+    <!-- Formulaire -->
+        <form id="clubForm" class="hidden max-w-sm mx-auto mt-5" method="POST">
+            <div class="mb-5">
+                <label for="club_name" class="block text-sm font-medium text-gray-900">Nationalité</label>
+                <input type="text" name="club_name" id="club_name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
+            </div>
+            <div class="mb-5">
+                <label for="logo_url" class="block text-sm font-medium text-gray-900">URL du drapeau</label>
+                <input type="url" name="logo_url" id="logo_url" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
+            </div>
+            <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
+        </form>
     </section>
 
+    <script>
+        const formClub = document.getElementById('clubForm');
+        const createButtonClub = document.getElementById('createClubs');
+
+        createButtonClub.addEventListener('click', () =>{
+            formClub.classList.toggle('hidden');
+        })
+    </script>
+
     <script src="../assets/js/script.js"></script>
-  </body>
+    
+    <?php
+    $connection->close();
+    ?>
+</body>
 </html>

@@ -32,9 +32,10 @@ sidebarToggle.addEventListener("click", () => {
 })
 
 //======================================//
-const form = document.getElementById('nationalityForm');
-        const createButton = document.getElementById('createProductButton');
+const formnNationality = document.getElementById('nationalityForm');
+const createButtonNationality = document.getElementById('createNationality');
 
-        createButton.addEventListener('click', () => {
-            form.classList.toggle('hidden');
+        createButtonNationality.addEventListener('click', () => {
+            formnNationality.classList.toggle('hidden');
         });
+
