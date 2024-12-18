@@ -2,22 +2,21 @@
 require("../database/connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des données depuis le formulaire
     $nationality_name = isset($_POST['nationality_name']) ? $_POST['nationality_name'] : '';
     $flag_url = isset($_POST['flag_url']) ? $_POST['flag_url'] : '';
 
     if (!empty($nationality_name) && !empty($flag_url)) {
+        // Requête SQL avec les colonnes correctes
         $stmt = $connection->prepare("INSERT INTO Nationalities (nationality_name, flag) VALUES (?, ?)");
         if (!$stmt) {
             die("Prepare failed: " . $connection->error);
         }
 
+        // Liaison des paramètres
         $stmt->bind_param("ss", $nationality_name, $flag_url);
 
-        if ($stmt->execute()) {
-            echo "<script>alert('Nationalité ajoutée avec succès !');</script>";
-        } else {
-            echo "<script>alert('Erreur lors de l\'ajout de la nationalité : " . $stmt->error . "');</script>";
-        }
+       
 
         $stmt->close();
     } else {
@@ -161,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </tr>
                             </thead>
                             <tbody>
-                               
+    
                             <?php
                                 $result = $connection->query("SELECT * FROM Nationalities");
                                 while ($row = $result->fetch_assoc()) {
@@ -184,9 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 </div>
                                             </td>
                                         </tr>";
-                                }
+                                     }
                                 ?>
-
 
                             </tbody>
                         </table>
@@ -210,13 +208,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </section>
 
-    <script>
-        const form = document.getElementById('nationalityForm');
-        const createButton = document.getElementById('createProductButton');
-
-        createButton.addEventListener('click', () => {
-            form.classList.toggle('hidden');
-        });
-    </script>
+<script src="../assets/js/script.js"></script>
 </body>
 </html>

@@ -30,3 +30,11 @@ sidebarToggle.addEventListener("click", () => {
         localStorage.setItem("status", "open");
     }
 })
+
+//======================================//
+const form = document.getElementById('nationalityForm');
+        const createButton = document.getElementById('createProductButton');
+
+        createButton.addEventListener('click', () => {
+            form.classList.toggle('hidden');
+        });
