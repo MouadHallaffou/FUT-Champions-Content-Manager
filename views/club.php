@@ -179,7 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <tbody>
                             <?php
                             $result = $connection->query("SELECT * FROM Clubs");
-                            if ($result) {
                                 while ($line = $result->fetch_assoc()) {
                                     echo "<tr class='border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'>
                                             <td class='px-4 py-3'>{$line['club_id']}</td>
@@ -189,11 +188,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </td>
                                             <td class='px-4 py-3'>
                                                 <div class='flex items-center space-x-4'>
-                                                    <a href='lien-vers-page-modifier' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+                                                    <a href='editClub.php?id={$line['club_id']}' class='py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
                                                         <i class='fas fa-edit mr-2'></i>
                                                         Edit
                                                     </a>
-                                                    <a href='lien-vers-page-supprimer' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
+                                                    <a href='deleteClub.php?id={$line['club_id']}' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
                                                         <i class='fas fa-trash mr-2'></i>
                                                         Delete
                                                     </a>
@@ -201,7 +200,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </td>
                                         </tr>";
                                  }
-                            }
                             ?>
                             </tbody>
                         </table>
