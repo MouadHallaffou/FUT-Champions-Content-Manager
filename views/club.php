@@ -16,14 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param('ss', $club_name, $logo_url);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Club ajouté avec succès !');</script>";
+            header('Location: ' . $_SERVER['PHP_SELF'] . '?success=1');
+            exit();
         } else {
-            echo "<script>alert('Erreur lors de l\'ajout du club : " . addslashes($stmt->error) . "');</script>";
+            echo "<script>alert('Erreur dans club : " . addslashes($stmt->error) . "');</script>";
         }
 
         $stmt->close();
     } else {
-        echo "<script>alert('Veuillez remplir tous les champs.');</script>";
+        echo "<script>alert('Veuillez rempli les champs.');</script>";
     }
 }
 

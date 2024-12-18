@@ -44,7 +44,7 @@ include("../database/connection.php");
                         <i class="fas fa-building"></i>
                         <span class="link-name">Club</span>
                     </a></li>
-                <li><a href="/FUT-Champions-Content-Manager/terrain/club.php">
+                <li><a href="#">
                         <i class="fas fa-building"></i>
                         <span class="link-name">Terrain</span>
                     </a></li>

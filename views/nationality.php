@@ -1,26 +1,28 @@
 <?php
-require("../database/connection.php");
-
+include("../database/connection.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nationality_name = isset($_POST['nationality_name']) ? trim($_POST['nationality_name']) : '';
+    $flag_url = isset($_POST['flag_url']) ? trim($_POST['flag_url']) : '';
 
-    $nationality_name = isset($_POST['nationality_name']) ? $_POST['nationality_name'] : '';
-    $flag_url = isset($_POST['flag_url']) ? $_POST['flag_url'] : '';
     if (!empty($nationality_name) && !empty($flag_url)) {
-
         $stmt = $connection->prepare("INSERT INTO Nationalities (nationality_name, flag) VALUES (?, ?)");
+
         if (!$stmt) {
-            die("Prepare failed: " . $connection->error);
+            die("Erreur de préparation de la requête : " . $connection->error);
         }
 
-        $stmt->bind_param("ss", $nationality_name, $flag_url);
+        $stmt->bind_param('ss', $nationality_name, $flag_url);
+
         if ($stmt->execute()) {
-            echo "<script>alert('nationality ajouté avec succès !');</script>";
+            header('Location: ' . $_SERVER['PHP_SELF'] . '?success=1');
+            exit();
         } else {
-            echo "<script>alert('Erreur lors de l\'ajout du natinalite : " . addslashes($stmt->error) . "');</script>";
+            echo "<script>alert('Erreur dans la nationalité : " . addslashes($stmt->error) . "');</script>";
         }
+
         $stmt->close();
     } else {
-        echo "<script>alert('Veuillez remplir tous les champs.');</script>";
+        echo "<script>alert('Veuillez remplir tout.');</script>";
     }
 }
 ?>
@@ -192,7 +194,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </section>
         <!-- End block -->
-
         <!-- Formulaire -->
         <form id="nationalityForm" class="hidden max-w-sm mx-auto mt-5" method="POST">
             <div class="mb-5">
