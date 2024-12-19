@@ -137,7 +137,7 @@ include("../database/connection.php");
                             </form>
                         </div>
                         <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                            <button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                            <button type="button" id="addPlayerButton" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-blue-800 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                                 <i class="fas fa-plus-circle h-3.5 w-3.5 mr-1.5 -ml-1"></i>
                                 Add Player
                             </button>
@@ -190,9 +190,7 @@ include("../database/connection.php");
                                         <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Flag" class="h-4 w-4">
                                     </td>
                                     <td class="px-4 py-3">Al-Nassr</td>
-                                    <td class="px-4 py-3">
-                                        <img src="https://cdn.sofifa.net/players/020/801/25_120.png" alt="Club Logo" class="h-4 w-4">
-                                    </td>
+
                                     <td class="px-4 py-3">ST</td>
                                     <td class="px-4 py-3">95</td>
                                     <td class="px-4 py-3">90</td>
@@ -221,8 +219,142 @@ include("../database/connection.php");
             </div>
         </section>
     <!-- End block -->
-    </section>
+    <form id="formulairePlayer" class="max-w-lg mx-auto mt-5 hidden">
+        <h2 class="text-xl font-bold text-gray-900 mb-5 text-center">Ajouter un joueur</h2>
 
-    <script src="assets/js/script.js"></script>
+        <div class="grid grid-cols-2 gap-4 mb-5">
+            <div>
+                <label for="namePlayer" class="block text-sm font-medium text-gray-900">Nom du joueur :</label>
+                <input type="text" id="namePlayer" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Entrez le nom du joueur" required>
+                <span class="text-sm text-red-600 hidden">*Uniquement des caractères</span>
+            </div>
+            <div>
+                <label for="photoPlayer" class="block text-sm font-medium text-gray-900">Photo du joueur :</label>
+                <input type="url" id="photoPlayer" name="photo" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="URL de la photo" required>
+                <span class="text-sm text-red-600 hidden">*L'URL doit commencer par "https://"</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-5">
+            <div>
+                <label for="nationalityPlayer" class="block text-sm font-medium text-gray-900">Nationalité :</label>
+                <select id="nationalityPlayer" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                    <option value="" selected>Choisir la nationalité</option>
+                    <option value=" "> * * </option>
+                </select>
+            </div>
+            <div>
+                <label for="clubPlayer" class="block text-sm font-medium text-gray-900">Club :</label>
+                <select id="clubPlayer" name="club" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                    <option value="" selected>Choisir le club</option>
+                    <option value=" "> * * </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-5">
+            <div>
+                <label for="positionPlayer" class="block text-sm font-medium text-gray-900">Position :</label>
+                <select id="positionPlayer" name="position" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                    <option value="" selected>Choisir la position</option>
+                    <option value="GK">GK</option>
+                    <option value="CBL">CBL</option>
+                    <option value="CBR">CBR</option>
+                    <option value="LB">LB</option>
+                    <option value="RB">RB</option>
+                    <option value="CML">CML</option>
+                    <option value="CMR">CMR</option>
+                    <option value="CM">CM</option>
+                    <option value="LW">LW</option>
+                    <option value="RW">RW</option>
+                    <option value="ST">ST</option>
+                </select>
+            </div>
+            <div>
+                <label for="ratingPlayers" class="block text-sm font-medium text-gray-900">Note globale :</label>
+                <input type="number" id="ratingPlayers" name="rating" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Note (10-99)" required>
+                <span class="text-sm text-red-600 hidden">*Comprise entre 10 et 99</span>
+            </div>
+        </div>
+
+        <div id="statsPlayers" class="">
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="pacePlayer" class="block text-sm font-medium text-gray-900">Vitesse :</label>
+                    <input type="number" id="pacePlayer" name="pace" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
+                </div>
+                <div>
+                    <label for="shootingPlayer" class="block text-sm font-medium text-gray-900">Tir :</label>
+                    <input type="number" id="shootingPlayer" name="shooting" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Tir (10-99)">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="passingPlayer" class="block text-sm font-medium text-gray-900">Passes :</label>
+                    <input type="number" id="passingPlayer" name="passing" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Passes (10-99)">
+                </div>
+                <div>
+                    <label for="dribblingPlayer" class="block text-sm font-medium text-gray-900">Dribbles :</label>
+                    <input type="number" id="dribblingPlayer" name="dribbling" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dribbles (10-99)">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="defendingPlayer" class="block text-sm font-medium text-gray-900">Défense :</label>
+                    <input type="number" id="defendingPlayer" name="defending" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Défense (10-99)">
+                </div>
+                <div>
+                    <label for="physicalPlayer" class="block text-sm font-medium text-gray-900">Physique :</label>
+                    <input type="number" id="physicalPlayer" name="physical" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Physique (10-99)">
+                </div>
+            </div>
+        </div>
+
+        <div id="statsGK" class="hidden">
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="divingGK" class="block text-sm font-medium text-gray-900">Plongée :</label>
+                    <input type="number" id="divingGK" name="diving" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Plongée (10-99)">
+                </div>
+                <div>
+                    <label for="handlingGK" class="block text-sm font-medium text-gray-900">Manipulation :</label>
+                    <input type="number" id="handlingGK" name="handling" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Manipulation (10-99)">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="kickingGK" class="block text-sm font-medium text-gray-900">Dégagement :</label>
+                    <input type="number" id="kickingGK" name="kicking" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dégagement (10-99)">
+                </div>
+                <div>
+                    <label for="reflexesGK" class="block text-sm font-medium text-gray-900">Réflexes :</label>
+                    <input type="number" id="reflexesGK" name="reflexes" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Réflexes (10-99)">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label for="speedGK" class="block text-sm font-medium text-gray-900">Vitesse :</label>
+                    <input type="number" id="speedGK" name="speed" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
+                </div>
+                <div>
+                    <label for="positioningGK" class="block text-sm font-medium text-gray-900">Positionnement :</label>
+                    <input type="number" id="positioningGK" name="positioning" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Positionnement (10-99)">
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
+        </div>
+    </form>
+    </section>
+    <script>
+  
+    </script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>

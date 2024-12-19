@@ -1,15 +1,6 @@
-const positionSelect = document.getElementById("positionPlayer");
-const elementsPlayer = document.querySelectorAll(".form-group-player");
-const elementsGK = document.querySelectorAll(".form-group-gk");
+const formClub = document.getElementById('clubForm');
+const createButtonClub = document.getElementById('createClubs');
 
-function playersPositionChange() {
-  if (positionSelect.value === "GK") {
-    elementsGK.forEach((element) => (element.style.display = "flex"));
-    elementsPlayer.forEach((element) => (element.style.display = "none"));
-  } else {
-    elementsGK.forEach((element) => (element.style.display = "none"));
-    elementsPlayer.forEach((element) => (element.style.display = "flex"));
-  }
-}
-positionSelect.addEventListener("change", playersPositionChange);
-playersPositionChange();
+createButtonClub.addEventListener('click', () =>{
+    formClub.classList.toggle('hidden');
+})

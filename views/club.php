@@ -222,17 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </section>
 
-    <script>
-        const formClub = document.getElementById('clubForm');
-        const createButtonClub = document.getElementById('createClubs');
-
-        createButtonClub.addEventListener('click', () =>{
-            formClub.classList.toggle('hidden');
-        })
-    </script>
-
-    <script src="../assets/js/script.js"></script>
-    
+    <script src="../assets/js/main.js"></script>
     <?php
     $connection->close();
     ?>
