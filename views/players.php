@@ -1,6 +1,72 @@
 <?php
 include("../database/connection.php");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des données du formulaire
+    $name_player = isset($_POST['name_player']) ? trim($_POST['name_player']) : '';
+    $photo_player = isset($_POST['photo_player']) ? trim($_POST['photo_player']) : '';
+    $nationality_player = isset($_POST['nationality_player']) ? trim($_POST['nationality_player']) : '';
+    $club_player = isset($_POST['club_player']) ? trim($_POST['club_player']) : '';
+    $position_player = isset($_POST['position_player']) ? trim($_POST['position_player']) : '';
+    $rating_player = isset($_POST['rating_player']) ? trim($_POST['rating_player']) : '';
+    $pace_player = isset($_POST['pace_player']) ? trim($_POST['pace_player']) : '';
+    $shooting_player = isset($_POST['shooting_player']) ? trim($_POST['shooting_player']) : '';
+    $passing_player = isset($_POST['passing_player']) ? trim($_POST['passing_player']) : '';
+    $dribbling_player = isset($_POST['dribbling_player']) ? trim($_POST['dribbling_player']) : '';
+    $defending_player = isset($_POST['defending_player']) ? trim($_POST['defending_player']) : '';
+    $physical_player = isset($_POST['physical_player']) ? trim($_POST['physical_player']) : '';
+
+    if (!empty($name_player) && !empty($photo_player) && !empty($nationality_player) && !empty($club_player) 
+        && !empty($position_player) && !empty($rating_player) && !empty($pace_player) 
+        && !empty($shooting_player) && !empty($passing_player) && !empty($dribbling_player) 
+        && !empty($defending_player)) {
+
+        $stmt = $connection->prepare("INSERT INTO Players (name_player, photo, nationality_id, club_id, position, rating, pace, shooting, passing, dribbling, defending, physical) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+    }
+
+    if (!$stmt) {
+        die("Error preparing SQL statement: ". $connection->error);
+    }
+
+    $stmt->bind_param('sssssiiiiiii', $name_player, $photo_player, $nationality_player, $club_player, $position_player, $rating_player, $pace_player, $shooting_player, $passing_player, $dribbling_player, $defending_player, $physical_player);
+
+    if ($stmt->execute()) {
+        header('Location: players.php?success=1');
+        exit();
+    } else {
+        echo "<script>alert('Erreur dans le club : " . addslashes($stmt->error) . "');</script>";
+    }
+    $stmt->close();
+}
+
+    $sqlnat = "SELECT nationality_name FROM Nationalities"; 
+    $resultnat = $connection->query($sqlnat);
+    if ($resultnat === false) {
+        echo "Error executing query: " . $connection->error;
+    } else {
+        $nationalities = [];
+        if ($resultnat->num_rows > 0) { 
+            while ($row = $resultnat->fetch_assoc()) {
+                $nationalities[] = $row['nationality_name']; 
+            }
+        } else {
+            echo "No nationalities found.";
+        }
+    }
+
+    $sqlclub = "SELECT club_name FROM Clubs"; 
+    $resultclub = $connection->query($sqlclub);
+    $clubs = [];
+    if ($resultclub->num_rows > 0) {
+        while ($row = $resultclub->fetch_assoc()) {
+            $clubs[] = $row['club_name']; 
+        }
+    } else {
+        echo "No clubs found.";
+    }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -219,43 +285,47 @@ include("../database/connection.php");
             </div>
         </section>
     <!-- End block -->
-    <form id="formulairePlayer" class="max-w-lg mx-auto mt-5 hidden">
+    <form id="formulairePlayer" class="max-w-lg mx-auto mt-5 hidden" method="post" action="">
         <h2 class="text-xl font-bold text-gray-900 mb-5 text-center">Ajouter un joueur</h2>
 
         <div class="grid grid-cols-2 gap-4 mb-5">
             <div>
                 <label for="namePlayer" class="block text-sm font-medium text-gray-900">Nom du joueur :</label>
-                <input type="text" id="namePlayer" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Entrez le nom du joueur" required>
+                <input type="text" id="namePlayer" name="name_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Entrez le nom du joueur" required>
                 <span class="text-sm text-red-600 hidden">*Uniquement des caractères</span>
             </div>
             <div>
                 <label for="photoPlayer" class="block text-sm font-medium text-gray-900">Photo du joueur :</label>
-                <input type="url" id="photoPlayer" name="photo" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="URL de la photo" required>
+                <input type="url" id="photoPlayer" name="photo_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="URL de la photo" required>
                 <span class="text-sm text-red-600 hidden">*L'URL doit commencer par "https://"</span>
             </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4 mb-5">
             <div>
-                <label for="nationalityPlayer" class="block text-sm font-medium text-gray-900">Nationalité :</label>
-                <select id="nationalityPlayer" name="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                <label for="nationalityPlayer" class="block text-sm font-medium text-gray-900">Nationalité:</label>
+                <select id="nationalityPlayer" name="nationality_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
                     <option value="" selected>Choisir la nationalité</option>
-                    <option value=" "> * * </option>
+                    <?php foreach ($nationalities as $nationality): ?>
+                    <option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div>
-                <label for="clubPlayer" class="block text-sm font-medium text-gray-900">Club :</label>
-                <select id="clubPlayer" name="club" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                <label for="clubPlayer" class="block text-sm font-medium text-gray-900">Club:</label>
+                <select id="clubPlayer" name="club_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
                     <option value="" selected>Choisir le club</option>
-                    <option value=" "> * * </option>
+                    <?php foreach ($clubs as $club): ?>
+            <option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+        <?php endforeach; ?>
                 </select>
             </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4 mb-5">
             <div>
-                <label for="positionPlayer" class="block text-sm font-medium text-gray-900">Position :</label>
-                <select id="positionPlayer" name="position" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
+                <label for="positionPlayer" class="block text-sm font-medium text-gray-900">Position:</label>
+                <select id="positionPlayer" name="position_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5">
                     <option value="" selected>Choisir la position</option>
                     <option value="GK">GK</option>
                     <option value="CBL">CBL</option>
@@ -272,7 +342,7 @@ include("../database/connection.php");
             </div>
             <div>
                 <label for="ratingPlayers" class="block text-sm font-medium text-gray-900">Note globale :</label>
-                <input type="number" id="ratingPlayers" name="rating" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Note (10-99)" required>
+                <input type="number" id="ratingPlayers" name="rating_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Note (10-99)" required>
                 <span class="text-sm text-red-600 hidden">*Comprise entre 10 et 99</span>
             </div>
         </div>
@@ -281,33 +351,33 @@ include("../database/connection.php");
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="pacePlayer" class="block text-sm font-medium text-gray-900">Vitesse :</label>
-                    <input type="number" id="pacePlayer" name="pace" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
+                    <input type="number" id="pacePlayer" name="pace_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
                 </div>
                 <div>
                     <label for="shootingPlayer" class="block text-sm font-medium text-gray-900">Tir :</label>
-                    <input type="number" id="shootingPlayer" name="shooting" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Tir (10-99)">
+                    <input type="number" id="shootingPlayer" name="shooting_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Tir (10-99)">
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="passingPlayer" class="block text-sm font-medium text-gray-900">Passes :</label>
-                    <input type="number" id="passingPlayer" name="passing" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Passes (10-99)">
+                    <input type="number" id="passingPlayer" name="passing_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Passes (10-99)">
                 </div>
                 <div>
                     <label for="dribblingPlayer" class="block text-sm font-medium text-gray-900">Dribbles :</label>
-                    <input type="number" id="dribblingPlayer" name="dribbling" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dribbles (10-99)">
+                    <input type="number" id="dribblingPlayer" name="dribbling_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dribbles (10-99)">
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="defendingPlayer" class="block text-sm font-medium text-gray-900">Défense :</label>
-                    <input type="number" id="defendingPlayer" name="defending" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Défense (10-99)">
+                    <input type="number" id="defendingPlayer" name="defending_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Défense (10-99)">
                 </div>
                 <div>
                     <label for="physicalPlayer" class="block text-sm font-medium text-gray-900">Physique :</label>
-                    <input type="number" id="physicalPlayer" name="physical" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Physique (10-99)">
+                    <input type="number" id="physicalPlayer" name="physical_player" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Physique (10-99)">
                 </div>
             </div>
         </div>
@@ -316,33 +386,33 @@ include("../database/connection.php");
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="divingGK" class="block text-sm font-medium text-gray-900">Plongée :</label>
-                    <input type="number" id="divingGK" name="diving" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Plongée (10-99)">
+                    <input type="number" id="divingGK" name="diving_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Plongée (10-99)">
                 </div>
                 <div>
                     <label for="handlingGK" class="block text-sm font-medium text-gray-900">Manipulation :</label>
-                    <input type="number" id="handlingGK" name="handling" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Manipulation (10-99)">
+                    <input type="number" id="handlingGK" name="handling_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Manipulation (10-99)">
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="kickingGK" class="block text-sm font-medium text-gray-900">Dégagement :</label>
-                    <input type="number" id="kickingGK" name="kicking" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dégagement (10-99)">
+                    <input type="number" id="kickingGK" name="kicking_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Dégagement (10-99)">
                 </div>
                 <div>
                     <label for="reflexesGK" class="block text-sm font-medium text-gray-900">Réflexes :</label>
-                    <input type="number" id="reflexesGK" name="reflexes" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Réflexes (10-99)">
+                    <input type="number" id="reflexesGK" name="reflexes_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Réflexes (10-99)">
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mb-5">
                 <div>
                     <label for="speedGK" class="block text-sm font-medium text-gray-900">Vitesse :</label>
-                    <input type="number" id="speedGK" name="speed" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
+                    <input type="number" id="speedGK" name="speed_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Vitesse (10-99)">
                 </div>
                 <div>
                     <label for="positioningGK" class="block text-sm font-medium text-gray-900">Positionnement :</label>
-                    <input type="number" id="positioningGK" name="positioning" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Positionnement (10-99)">
+                    <input type="number" id="positioningGK" name="positioning_GK" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" placeholder="Positionnement (10-99)">
                 </div>
             </div>
         </div>
@@ -353,8 +423,30 @@ include("../database/connection.php");
     </form>
     </section>
     <script>
-  
+        const addPlayerButton = document.getElementById('addPlayerButton');;
+        const formulairePlayer = document.getElementById('formulairePlayer');
+        const statsGK = document.getElementById('statsGK');
+        const statPlayer = document.getElementById('statsPlayers');
+        const positionPlayer = document.getElementById('positionPlayer');
+        addPlayerButton.addEventListener('click', () => {
+            formulairePlayer.classList.toggle('hidden');
+        });
+        positionPlayer.addEventListener('change', () => {
+            if (positionPlayer.value === 'GK') {
+                statsGK.classList.remove('hidden');
+                statPlayer.classList.add('hidden');
+            } else {
+                statsGK.classList.add('hidden');
+                statPlayer.classList.remove('hidden');
+            }
+        });
     </script>
-    <script src="../assets/js/main.js"></script>
 </body>
 </html>
+
+    <!-- $diving_GK = isset($_POST['diving_GK']) ? trim($_POST['diving_GK']) : '';
+    $handling_GK = isset($_POST['handling_GK']) ? trim($_POST['handling_GK']) : '';
+    $kicking_GK = isset($_POST['kicking_GK']) ? trim($_POST['kicking_GK']) : '';
+    $reflexes_GK = isset($_POST['reflexes_GK']) ? trim($_POST['reflexes_GK']) : '';
+    $speed_GK = isset($_POST['speed_GK']) ? trim($_POST['speed_GK']) : '';
+    $positioning_GK = isset($_POST['positioning_GK']) ? trim($_POST['positioning_GK']) : ''; -->
