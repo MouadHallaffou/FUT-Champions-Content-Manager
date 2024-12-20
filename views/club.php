@@ -136,8 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                         <div class="flex-1 flex items-center space-x-2">
                             <h5>
-                                <span class="text-gray-500">All Players:</span>
-                                <span class="dark:text-white">0</span>
+                                <span class="text-gray-500">All Clubs:</span>
+                                <span class="dark:text-white"><?= $connection->query("SELECT COUNT(*) FROM Clubs")->fetch_row()[0]; ?></span>
                             </h5>
                         </div>
                         <div class="flex-shrink-0 flex flex-col items-start md:flex-row md:items-center lg:justify-end space-y-3 md:space-y-0 md:space-x-3">

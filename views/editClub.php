@@ -11,7 +11,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     if (!$result) {
-        die("Erreur lors de la récupération des données : ".mysqli_error($connection));
+        die("Erreur lors de la recuperation de donner : ".mysqli_error($connection));
     } else {
         $row = mysqli_fetch_assoc($result);
 

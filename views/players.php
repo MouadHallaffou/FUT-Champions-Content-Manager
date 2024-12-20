@@ -188,7 +188,7 @@ if ($connection->connect_error) {
             </div>
 
             <!-- Start block -->
-            <section class="bg-gray-50 py-1 bg-gray-300 sm:rounded-lg antialiased">
+            <section class="bg-gray-50 py-1 px-1 bg-gray-300 sm:rounded-lg antialiased">
                 <div class="mx-auto max-w-screen-auto">
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
