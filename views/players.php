@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dribbling_player = isset($_POST['dribbling_player']) ? trim($_POST['dribbling_player']) : '';
     $defending_player = isset($_POST['defending_player']) ? trim($_POST['defending_player']) : '';
     $physical_player = isset($_POST['physical_player']) ? trim($_POST['physical_player']) : '';
-    // var_dump($row["position"]);
+
 
     if (!empty($name_player) && !empty($photo_player) && !empty($nationality_player) && !empty($club_player) 
         && !empty($position_player) && !empty($rating_player) && !empty($pace_player) 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultClub = $stmtClub->get_result();
         $club_id = $resultClub->fetch_assoc()['club_id'];
 
-        $stmt->bind_param('sssdiii', $name_player, $photo_player, $nationality_id, $club_id, $position_player, $rating_player, $statistjr_id);
+        $stmt->bind_param('ssssssi', $name_player, $photo_player, $nationality_id, $club_id, $position_player, $rating_player, $statistjr_id);
 
         if ($stmt->execute()) {
             header('Location: players.php?success=1');
@@ -284,7 +284,7 @@ if ($connection->connect_error) {
                                             echo "<tr><td colspan='16'>No players found.</td></tr>";
                                         }
                                     } else {
-                                        echo "Error in SQL query: " . $connection->error;
+                                        echo "Error dans SQl querys: " . $connection->error;
                                     }
                                     ?>
                                 </tbody>
@@ -295,7 +295,7 @@ if ($connection->connect_error) {
             </section>
             <!-- End block -->
             
-            <form id="formulairePlayer" class="max-w-lg mx-auto mt-5 hidden" method="post" action="">
+            <form id="formulairePlayer" class="hidden fixed inset-0 z-50 bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto border border-gray-300 max-h-[72vh] overflow-y-auto" method="post" action="">
                 <h2 class="text-xl font-bold text-gray-900 mb-5 text-center">Ajouter un joueur</h2>
 
                 <div class="grid grid-cols-2 gap-4 mb-5">
