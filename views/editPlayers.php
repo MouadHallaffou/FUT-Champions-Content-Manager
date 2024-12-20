@@ -22,24 +22,50 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
     die("ID non spécifié.");
 }
 
-if (isset($_POST['updatePlayer'])){
+if (isset($_POST['updatePlayer'])) {
     $id = $_POST['id'];
-    $player_name = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $photo_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $nationality_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $club_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $position_player = mysqli_real_escape_string($connection , $_POST['player_name']) ;
-    $rating_player = mysqli_real_escape_string($connection , $_POST['player_name']) ;
-    $pace_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $shooting_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $passing_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $dribbling_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $defending_player = mysqli_real_escape_string($connection , $_POST['player_name']);
-    $physical_player = mysqli_real_escape_string($connection , $_POST['player_name']);
+    $player_name = $_POST['name_player'];
+    $photo_player = $_POST['photo_player'];
+    $nationality_player = $_POST['nationality_player'];
+    $club_player = $_POST['club_player'];
+    $position_player = $_POST['position_player'];
+    $rating_player = $_POST['rating_player'];
+    $pace_player = $_POST['pace_player'];
+    $shooting_player = $_POST['shooting_player'];
+    $passing_player = $_POST['passing_player'];
+    $dribbling_player = $_POST['dribbling_player'];
+    $defending_player = $_POST['defending_player'];
+    $physical_player = $_POST['physical_player'];
 
+    $update_query = "UPDATE players SET name = ?, photo = ?, nationality = ?, club = ?, position = ?, rating = ?, pace = ?, shooting = ?, passing = ?, dribbling = ?, defending = ?, physical = ? WHERE player_id = ?";
+    $update_stmt = mysqli_prepare($connection, $update_query);
+    
+    mysqli_stmt_bind_param($update_stmt, 'sssssiiiiiiii', 
+        $player_name, 
+        $photo_player, 
+        $nationality_player, 
+        $club_player, 
+        $position_player, 
+        $rating_player, 
+        $pace_player, 
+        $shooting_player, 
+        $passing_player, 
+        $dribbling_player, 
+        $defending_player, 
+        $physical_player,
+        $id
+    );
 
-
+    if (mysqli_stmt_execute($update_stmt)) {
+        echo "Mise à jour avec succès.";
+        header("Location: players.php");
+        exit();
+    } else {
+        echo "Erreur lors de la mise à jour : " . mysqli_error($connection);
+    }
 }
+
+
 
 
 ?>
