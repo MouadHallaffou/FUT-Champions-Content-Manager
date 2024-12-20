@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $defending_player = isset($_POST['defending_player']) ? trim($_POST['defending_player']) : '';
     $physical_player = isset($_POST['physical_player']) ? trim($_POST['physical_player']) : '';
 
-
     if (!empty($name_player) && !empty($photo_player) && !empty($nationality_player) && !empty($club_player) 
         && !empty($position_player) && !empty($rating_player) && !empty($pace_player) 
         && !empty($shooting_player) && !empty($passing_player) && !empty($dribbling_player) 
@@ -248,55 +247,55 @@ if ($connection->connect_error) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
-                                    if ($result = $connection->query($sql)){
-                                        if ($result->num_rows > 0){
-                                            while ($row = $result->fetch_assoc()){
-                                                echo '<tr>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["player_id"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["name_player"]) . '</td>';
-                                                echo '<td class="px-4 py-3"><img src="'. htmlspecialchars($row["photo"]) .'" alt="Profile" class="h-8 w-8"></td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["nationality_name"]) . '</td>';
-                                                echo '<td class="px-4 py-3"><img src="'. htmlspecialchars($row["flag"]) .'" alt="Flag" class="h-8 w-8"></td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["club_name"]) . '</td>';
-                                                echo '<td class="px-4 py-3"><img src="'. htmlspecialchars($row["logo"]) .'" alt="Logo" class="h-8 w-8"></td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["position"]) . '</td>'; 
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["rating"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["pace"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["shooting"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["passing"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["dribbling"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["defending"]) . '</td>';
-                                                echo '<td class="px-4 py-3">'. htmlspecialchars($row["physical"]) . '</td>';
-                                                echo '<td class="px-4 py-3 flex space-x-2">
-                                                <a href="edit_page.php" class="py-2 px-3 flex items-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
+                            <?php 
+                            if ($result = $connection->query($sql)){
+                                if ($result->num_rows > 0){
+                                    while ($row = $result->fetch_assoc()) : ?>
+                                        <tr>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["player_id"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["name_player"]) ?></td>
+                                            <td class="px-4 py-3"><img src="<?= htmlspecialchars($row["photo"]) ?>" alt="Profile" class="h-8 w-8"></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["nationality_name"]) ?></td>
+                                            <td class="px-4 py-3"><img src="<?= htmlspecialchars($row["flag"]) ?>" alt="Flag" class="h-6 w-8"></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["club_name"]) ?></td>
+                                            <td class="px-4 py-3"><img src="<?= htmlspecialchars($row["logo"]) ?>" alt="Logo" class="h-8 w-8"></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["position"]) ?></td> 
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["rating"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["pace"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["shooting"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["passing"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["dribbling"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["defending"]) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row["physical"]) ?></td>
+                                            <td class="px-4 py-3 flex space-x-2">
+                                                <a href="editPlayers.php?id=<?=$row['player_id'] ?>" class="py-2 px-3 flex items-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
                                                     <i class="fas fa-edit mr-2"></i>
                                                     Edit
                                                 </a>
-                                                <a href="delete_page.php" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                <a href="deletePlayers.php?id=<?= $row['player_id'] ?>" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                                     <i class="fas fa-trash mr-2"></i>
                                                     Delete
                                                 </a>
-                                                </td>';                                               
-                                                echo '</tr>';
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='16'>No players found.</td></tr>";
-                                        }
-                                    } else {
-                                        echo "Error dans SQl querys: " . $connection->error;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; 
+                                } else {
+                                    echo "<tr><td colspan='16'>No players found.</td></tr>";
+                                }
+                            } else {
+                                echo "Error dans SQl querys: " . $connection->error;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                  </div>
                 </div>
-            </section>
+            </div>
+        </section>
             <!-- End block -->
             
-            <form id="formulairePlayer" class="hidden fixed inset-0 z-50 bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto border border-gray-300 max-h-[72vh] overflow-y-auto" method="post" action="">
-                <h2 class="text-xl font-bold text-gray-900 mb-5 text-center">Ajouter un joueur</h2>
+        <form id="formulairePlayer" class="hidden fixed inset-0 z-50 bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto border border-gray-300 max-h-[72vh] overflow-y-auto" method="POST" action="">
+             <h2 class="text-xl font-bold text-gray-900 mb-5 text-center">Ajouter un joueur</h2>
 
                 <div class="grid grid-cols-2 gap-4 mb-5">
                     <div>
