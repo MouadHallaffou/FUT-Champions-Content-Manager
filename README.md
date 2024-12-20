@@ -46,38 +46,6 @@ Le projet vise à optimiser la gestion de contenu du jeu en utilisant les meille
 ## 📂 Structure du projet
 
 FUT-Champions-Content-Manager/ 
-│ README.md 
-# Documentation du projet 
-│ index.php 
-# Page principale (Interface utilisateur - Client) 
-│ ├── assets/ 
-# Contient tous les fichiers statiques (CSS, JS, images) 
-│ ├── css/
-│ │ └── style.css 
-# Styles CSS pour l'interface utilisateur et admin 
-│ │ │ ├── js/
-│ │ └── script.js 
-# Scripts JavaScript pour l'interactivité 
-│ │ │ └── images/
-│ └── logo.webp 
-# Logo ou autres images 
-│ ├── database/
-│ └── connection.php 
-# Fichier de connexion à la base de données 
-│ ├── includes/
-│ ├── dashboard.php 
-# Interface Admin : tableau de bord pour gérer les joueurs 
-│ └── header.php 
-# En-tête commun pour les pages  
-│ ├── SQL/
-│ └── schema.sql 
-# Script SQL pour créer la base de données et les tables 
-│ └── views/ 
-# Séparation des vues pour plus de clarté 
-    ├── admin.php 
-# Interface Admin principale 
-    └── client.php 
-# Interface Client (affichage des joueurs en 4-3-3)
 
 ## 🛠️ Installation
 

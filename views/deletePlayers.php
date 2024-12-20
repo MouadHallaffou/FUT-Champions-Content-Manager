@@ -15,7 +15,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])){
 }else{
     echo 'ID non valide.'; 
 }
-
 $connection -> close();
-
 ?>
