@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
         <!-- End block -->
         <!-- Formulaire -->
-        <form id="nationalityForm" class="hidden max-w-sm mx-auto mt-5" method="POST">
+        <form id="nationalityForm" class="hidden fixed inset-0 z-50 bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto border border-gray-300 max-h-[30vh] overflow-y-auto" method="POST">
             <div class="mb-5">
                 <label for="nationality_name" class="block text-sm font-medium text-gray-900">Nationalité</label>
                 <input type="text" name="nationality_name" id="nationality_name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
@@ -223,10 +223,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="flag_url" class="block text-sm font-medium text-gray-900">URL du drapeau</label>
                 <input type="url" name="flag_url" id="flag_url" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
             </div>
+            <div class="flex justify-between">
             <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
+            <button type="button" class="bg-gray-500 text-white px-5 py-2 rounded-lg" id="cancelButtonNationality">Cancel</button>
+            </div>
         </form>
     </section>
 
+    <script>
+        const cancelButtonNationality = document.getElementById("cancelButtonNationality");
+        const nationalityForm = document.getElementById("nationalityForm");
+        cancelButtonNationality.addEventListener("click", () => {
+        nationalityForm.classList.toggle("hidden");
+        });
+    </script>
     <script src="../assets/js/script.js"></script>
     <?php
         $connection->close();

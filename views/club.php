@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     <!-- End block -->
     <!-- Formulaire -->
-        <form id="clubForm" class="hidden max-w-sm mx-auto mt-5" method="POST">
+        <form id="clubForm" class="hidden fixed inset-0 z-50 bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto border border-gray-300 max-h-[30vh] overflow-y-auto" method="POST">
             <div class="mb-5">
                 <label for="club_name" class="block text-sm font-medium text-gray-900">Club:</label>
                 <input type="text" name="club_name" id="club_name" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
@@ -218,10 +218,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="logo_url" class="block text-sm font-medium text-gray-900">URL du Logo</label>
                 <input type="url" name="logo_url" id="logo_url" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5" required>
             </div>
-            <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
+            <div class="flex justify-between">
+                <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
+                <button type="button" class="bg-gray-500 text-white px-5 py-2 rounded-lg" id="cancelButtonClub">Cancel</button>
+            </div>
         </form>
     </section>
-
+    <script>
+        const cancelButton = document.getElementById("cancelButtonClub");
+        const clubForm = document.getElementById("clubForm");
+        cancelButton.addEventListener("click", () => {
+        clubForm.classList.toggle("hidden");
+        });
+    </script>
     <script src="../assets/js/main.js"></script>
     <?php
     $connection->close();

@@ -37,5 +37,3 @@ const createButtonNationality = document.getElementById("createNationality");
 createButtonNationality.addEventListener("click", () => {
   formnNationality.classList.toggle("hidden");
 });
-
-
