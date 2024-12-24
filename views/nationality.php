@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="box box1">
                         <i class="fas fa-users"></i>
                         <span class="text">Total players</span>
-                        <span class="number">23</span>
+                        <span class="number"><?= $connection->query("SELECT COUNT(*) FROM Players")->fetch_row()[0]; ?></span>
                     </div>
                     <div class="box box2">
                         <i class="fas fa-futbol"></i>
@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <i class='fas fa-edit mr-2'></i>
                                                         Edit
                                                     </a>
-                                                    <a href='deleteNationality.php?id={$row['nationality_id']}' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
+                                                    <a href='deleteNationality.php?id={$row['nationality_id']}' onclick='return confirm('are you sur')' class='flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900'>
                                                         <i class='fas fa-trash mr-2'></i>
                                                         Delete
                                                     </a>

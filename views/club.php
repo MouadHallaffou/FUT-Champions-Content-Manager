@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="box box1">
                         <i class="fas fa-users"></i>
                         <span class="text">Total players</span>
-                        <span class="number">23</span>
+                        <span class="number"><?= $connection->query("SELECT COUNT(*) FROM Players")->fetch_row()[0]; ?></span>
                     </div>
                     <div class="box box2">
                         <i class="fas fa-futbol"></i>
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </td>
                                             <td class='px-4 py-3'>
                                                 <div class='flex items-center space-x-4'>
-                                                    <a href='editClub.php?id={$line['club_id']}' class='flex items-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900'>
+                                                    <a href='editClub.php?id={$line['club_id']}' onclick='confirme('are you sure')' class='flex items-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900'>
                                                         <i class='fas fa-edit mr-2'></i>
                                                         Edit
                                                     </a>

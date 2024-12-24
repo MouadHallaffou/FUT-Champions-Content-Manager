@@ -283,7 +283,7 @@ if ($connection->connect_error) {
                                                             <i class="fas fa-edit mr-2"></i>
                                                             Edit
                                                         </a>
-                                                        <a href="deletePlayers.php?id=<?= $row['player_id'] ?>" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                                        <a href="deletePlayers.php?id=<?= $row['player_id'] ?>" onclick="return confirm('are you sur')" class="flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                                             <i class="fas fa-trash mr-2"></i>
                                                             Delete
                                                         </a>
@@ -435,7 +435,7 @@ if ($connection->connect_error) {
                 </div>
                 <div class="flex justify-between">
                     <button type="submit" class="bg-blue-700 text-white px-5 py-2 rounded-lg">Enregistrer</button>
-                    <button type="button" class="bg-gray-500 text-white px-5 py-2 rounded-lg" id="cancelButtonPlayer">Cancel</button>
+                    <button type="reset" class="bg-gray-500 text-white px-5 py-2 rounded-lg" id="cancelButtonPlayer">Cancel</button>
                 </div>
             </form>
         </div>
